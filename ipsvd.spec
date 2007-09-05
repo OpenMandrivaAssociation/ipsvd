@@ -4,7 +4,7 @@
 Summary:	Internet protocol service daemons
 Name:		ipsvd
 Version:	0.13.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	BSD
 Group:		System/Servers
 URL:		http://smarden.org/ipsvd/
@@ -55,7 +55,8 @@ pushd %{name}-%{version}/src
     echo "diet gcc -Os -pipe -nostdinc" > conf-cc
     echo "diet gcc -Os -static -s -nostdinc" > conf-ld
     make
-    make check
+    make sslsvd
+#    make check
 popd
 
 %install
@@ -65,7 +66,7 @@ install -d %{buildroot}/sbin/
 install -d %{buildroot}%{_mandir}/man{5,7,8}
 
 pushd %{name}-%{version}
-    for i in ipsvd-cdb sslio tcpsvd udpsvd; do
+    for i in ipsvd-cdb sslio tcpsvd udpsvd sslsvd; do
 	install -m0755 src/$i %{buildroot}/sbin/
     done
 popd
@@ -84,6 +85,7 @@ install -m0644 %{name}-%{version}/man/*.8 %{buildroot}%{_mandir}/man8/
 %doc %{name}-%{version}/doc/*.html
 %attr(0755,root,root) /sbin/ipsvd-cdb
 %attr(0755,root,root) /sbin/sslio
+%attr(0755,root,root) /sbin/sslsvd
 %attr(0755,root,root) /sbin/tcpsvd
 %attr(0755,root,root) /sbin/udpsvd
 %attr(0644,root,root) %{_mandir}/man5/ipsvd-instruct.5*
