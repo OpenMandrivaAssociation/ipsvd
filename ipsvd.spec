@@ -3,13 +3,13 @@
 
 Summary:	Internet protocol service daemons
 Name:		ipsvd
-Version:	0.12.1
+Version:	0.13.0
 Release:	%mkrel 1
 License:	BSD
 Group:		System/Servers
 URL:		http://smarden.org/ipsvd/
-Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.bz2
-Patch0:		ipsvd-0.12.1-system_matrixssl.diff
+Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.gz
+Patch0:		ipsvd-system_matrixssl.diff
 BuildRequires:	dietlibc-devel >= 0.20
 BuildRequires:	matrixssl-devel
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -93,5 +93,3 @@ install -m0644 %{name}-%{version}/man/*.8 %{buildroot}%{_mandir}/man8/
 %attr(0644,root,root) %{_mandir}/man8/sslsvd.8*
 %attr(0644,root,root) %{_mandir}/man8/tcpsvd.8*
 %attr(0644,root,root) %{_mandir}/man8/udpsvd.8*
-
-
