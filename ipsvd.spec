@@ -12,6 +12,7 @@ Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.gz
 Patch0:		ipsvd-system_matrixssl.diff
 BuildRequires:	dietlibc-devel >= 0.20
 BuildRequires:	matrixssl-devel
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 ipsvd is a set of internet protocol service daemons for Unix. It 
