@@ -1,13 +1,17 @@
+%define _enable_debug_packages %{nil}
+%define debug_package          %{nil}
+
 Summary:	Internet protocol service daemons
 Name:		ipsvd
 Version:	0.14.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	BSD
 Group:		System/Servers
 URL:		http://smarden.org/ipsvd/
 Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.gz
 Patch0:		ipsvd-system_matrixssl.diff
 BuildRequires:	matrixssl-devel
+BuildRequires:	dietlibc-devel >= 0.32
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -41,11 +45,9 @@ pushd %{name}-%{version}/src
 popd
 
 %build
-%serverbuild
-
 pushd %{name}-%{version}/src
-    echo "gcc $CFLAGS -pipe" > conf-cc
-    echo "gcc $CFLAGS -s" > conf-ld
+    echo "diet gcc -Os -pipe -nostdinc" > conf-cc
+    echo "diet gcc -Os -static -s -nostdinc" > conf-ld
     make
     make sslsvd
     make check
