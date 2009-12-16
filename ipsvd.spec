@@ -4,7 +4,7 @@
 Summary:	Internet protocol service daemons
 Name:		ipsvd
 Version:	1.0.0
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	BSD
 Group:		System/Servers
 URL:		http://smarden.org/ipsvd/
