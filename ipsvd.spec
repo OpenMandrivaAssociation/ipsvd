@@ -1,17 +1,11 @@
-%define _enable_debug_packages %{nil}
-%define debug_package          %{nil}
-
 Summary:	Internet protocol service daemons
 Name:		ipsvd
 Version:	1.0.0
-Release:	%mkrel 6
+Release:	%mkrel 7
 License:	BSD
 Group:		System/Servers
 URL:		http://smarden.org/ipsvd/
 Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.gz
-Patch0:		ipsvd-system_matrixssl.diff
-BuildRequires:	matrixssl-devel
-BuildRequires:	dietlibc-devel >= 0.32
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -40,16 +34,9 @@ ipsvd can be used to run services normally run by inetd, xinetd, or tcpserver.
 
 %setup -q -n net
 
-pushd %{name}-%{version}/src
-%patch0 -p0
-popd
-
 %build
 pushd %{name}-%{version}/src
-    echo "diet gcc -Os -pipe -nostdinc" > conf-cc
-    echo "diet gcc -Os -static -s -nostdinc" > conf-ld
     make
-    make sslsvd
     make check
 popd
 
@@ -60,7 +47,7 @@ install -d %{buildroot}/sbin/
 install -d %{buildroot}%{_mandir}/man{5,7,8}
 
 pushd %{name}-%{version}
-    for i in ipsvd-cdb sslio tcpsvd udpsvd sslsvd; do
+    for i in ipsvd-cdb tcpsvd udpsvd; do
 	install -m0755 src/$i %{buildroot}/sbin/
     done
 popd
@@ -68,6 +55,8 @@ popd
 install -m0644 %{name}-%{version}/man/*.5 %{buildroot}%{_mandir}/man5/
 install -m0644 %{name}-%{version}/man/*.7 %{buildroot}%{_mandir}/man7/
 install -m0644 %{name}-%{version}/man/*.8 %{buildroot}%{_mandir}/man8/
+rm -f %{buildroot}%{_mandir}/man8/sslio.8*
+rm -f %{buildroot}%{_mandir}/man8/sslsvd.8*
 
 %clean
 rm -rf %{buildroot}
@@ -78,14 +67,10 @@ rm -rf %{buildroot}
 %doc %{name}-%{version}/package/README
 %doc %{name}-%{version}/doc/*.html
 %attr(0755,root,root) /sbin/ipsvd-cdb
-%attr(0755,root,root) /sbin/sslio
-%attr(0755,root,root) /sbin/sslsvd
 %attr(0755,root,root) /sbin/tcpsvd
 %attr(0755,root,root) /sbin/udpsvd
 %attr(0644,root,root) %{_mandir}/man5/ipsvd-instruct.5*
 %attr(0644,root,root) %{_mandir}/man7/ipsvd.7*
 %attr(0644,root,root) %{_mandir}/man8/ipsvd-cdb.8*
-%attr(0644,root,root) %{_mandir}/man8/sslio.8*
-%attr(0644,root,root) %{_mandir}/man8/sslsvd.8*
 %attr(0644,root,root) %{_mandir}/man8/tcpsvd.8*
 %attr(0644,root,root) %{_mandir}/man8/udpsvd.8*
