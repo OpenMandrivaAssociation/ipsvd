@@ -7,7 +7,7 @@ Version:	1.0.0
 Release:	9
 License:	BSD
 Group:		System/Servers
-Url:		http://smarden.org/ipsvd/
+Url:		https://smarden.org/ipsvd/
 Source0:	http://smarden.org/ipsvd/%{name}-%{version}.tar.gz
 
 %description
